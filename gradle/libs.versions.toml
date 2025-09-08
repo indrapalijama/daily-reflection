@@ -1,0 +1,45 @@
+[versions]
+#noinspection AndroidGradlePluginVersion
+accompanistSwiperefresh = "0.30.1"
+agp = "8.7.1"
+kotlin = "2.0.0"
+#noinspection GradleDependency
+coreKtx = "1.16.0"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+lifecycleRuntimeKtx = "2.9.3"
+activityCompose = "1.10.1"
+composeBom = "2025.08.01"
+retrofit = "2.9.0"
+coroutines = "1.8.1"
+lifecycle = "2.9.3"
+pullRefresh = "1.1.0"
+
+[libraries]
+accompanistSwiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
+androidxCoreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidxJUnit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidxEspressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidxLifecycleRuntimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidxActivityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidxComposeBom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidxUi = { group = "androidx.compose.ui", name = "ui" }
+androidxUiGraphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidxUiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidxUiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidxUiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidxUiTestJunit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidxMaterial3 = { group = "androidx.compose.material3", name = "material3" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converterGson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+kotlinxCoroutinesAndroid = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+lifecycleViewmodelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+composeMaterial3PullRefresh = { group = "eu.bambooapps", name = "compose-material3-pullrefresh", version.ref = "pullRefresh" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
