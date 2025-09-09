@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.lifecycleViewmodelCompose)
     implementation(libs.accompanistSwiperefresh)
     implementation(libs.composeMaterial3PullRefresh)
+    implementation(libs.gson)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidxJUnit)

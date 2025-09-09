@@ -6,10 +6,12 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
+import java.util.concurrent.TimeUnit
 
 interface ReflectionApi {
-    @GET("reflection")
-    suspend fun getReflection(): ReflectionData
+    @GET("reflection/{version}")
+    suspend fun getReflection(@Path("version") version: String): ReflectionData
 
     companion object {
         private const val ACCESS_KEY = "m9Op[3w4IRSgLVzv_}J>T5Y^q]_7?B"
@@ -22,11 +24,12 @@ interface ReflectionApi {
                     .build()
                 chain.proceed(requestWithHeaders)
             }
-
             val client = OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(headerInterceptor)
                 .build()
-
             return Retrofit.Builder()
                 .baseUrl("https://fulk-bible.vercel.app/")
                 .client(client)
