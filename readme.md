@@ -121,10 +121,9 @@ OkHttpClient configured with timeouts for network efficiency.
 
 ## To-Do
 
-- [ ] Implement the **Favorites** feature functionality to allow users to save and view favorite reflections
+- [x] Implement the **Favorites** feature functionality to allow users to save and view favorite reflections
 - [ ] Enhance **loading and error states** with animations or additional user-friendly illustrations
-- [ ] Expand support for **offline caching** to allow reading reflections without internet access
-- [ ] Add support for **more languages** beyond Bahasa Indonesia, including English and others
+- [x] Expand support for **offline caching** to allow reading reflections without internet access
 - [ ] Improve UI/UX with **animations, transitions, and polished designs** for all screens
 - [ ] Implement **unit and UI tests** for critical components to ensure reliability
 - [ ] Add **settings screen** to allow customization such as theme switching (dark/light mode) and notification preferences
