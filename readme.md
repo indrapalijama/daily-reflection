@@ -61,7 +61,7 @@ Displays today's reflection content and formatted date.
 - **SourcesScreen.kt**
 Lists primary sources (`Santapan Harian`, `Renungan Harian`, `Renungan Oswald Chambers`) with a bordered selectable item design matching the app’s theme.
 - **FavoritesScreen.kt**
-Placeholder screen showing "Menu Favorit segera hadir" message.
+Display list of favorited daily reflection
 - **ReflectionBottomBar.kt**
   Bottom navigation bar with three tabs:
     - Beranda (Home)
