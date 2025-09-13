@@ -1,6 +1,7 @@
 [versions]
 #noinspection AndroidGradlePluginVersion
 accompanistSwiperefresh = "0.30.1"
+#noinspection AndroidGradlePluginVersion
 agp = "8.7.1"
 gson = "2.10.1"
 kotlin = "2.0.0"
@@ -10,12 +11,18 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.9.3"
+#noinspection GradleDependency
 activityCompose = "1.10.1"
+#noinspection GradleDependency
 composeBom = "2025.08.01"
 retrofit = "2.9.0"
 coroutines = "1.8.1"
 lifecycle = "2.9.3"
 pullRefresh = "1.1.0"
+room = "2.8.0"
+ksp = "2.0.20-1.0.25"
+material-icons = "1.6.8"
+
 
 [libraries]
 accompanistSwiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
@@ -39,9 +46,15 @@ kotlinxCoroutinesAndroid = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 lifecycleViewmodelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 composeMaterial3PullRefresh = { group = "eu.bambooapps", name = "compose-material3-pullrefresh", version.ref = "pullRefresh" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "material-icons" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
 

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -11,9 +12,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.dailyreflection"
-        minSdk = 34
-        //noinspection EditedTargetSdkVersion
-        targetSdk = 35
+        minSdk = 33
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -57,6 +57,10 @@ dependencies {
     implementation(libs.accompanistSwiperefresh)
     implementation(libs.composeMaterial3PullRefresh)
     implementation(libs.gson)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.material.icons.extended)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidxJUnit)

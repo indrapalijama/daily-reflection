@@ -8,6 +8,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Fullscreen
+import androidx.compose.material.icons.filled.FullscreenExit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,12 +44,16 @@ val MonoError = Color(0xFF000000)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReflectionScreen(viewModel: ReflectionViewModel) {
+fun ReflectionScreen(
+    viewModel: ReflectionViewModel,
+    isFullscreen: Boolean = false,
+    onFullscreenToggle: () -> Unit = {}
+) {
     val reflection by viewModel.reflection
     val isLoading by viewModel.isLoading
     val error by viewModel.error
+    val isFavorite by viewModel.isFavorite
     val isRefreshing = isLoading
-
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing,
         onRefresh = { viewModel.fetchReflection() }
@@ -92,7 +101,7 @@ fun ReflectionScreen(viewModel: ReflectionViewModel) {
                                 .fillMaxWidth()
                                 .height(60.dp)
                         ) {
-                            Text("RETRY", fontSize = 23.sp, fontWeight = FontWeight.ExtraBold)
+                            Text("Coba lagi", fontSize = 23.sp, fontWeight = FontWeight.ExtraBold)
                         }
                     }
                 }
@@ -104,10 +113,30 @@ fun ReflectionScreen(viewModel: ReflectionViewModel) {
                             .fillMaxSize()
                             .padding(horizontal = 8.dp, vertical = 20.dp)
                     ) {
-                        ReflectionCard(it)
+                        ReflectionCard(
+                            reflection = it,
+                            isFavorite = isFavorite,
+                            onToggleFavorite = { viewModel.toggleFavorite(it) }
+                        )
                     }
                 }
             }
+        }
+
+        // Floating Fullscreen Toggle Button
+        FloatingActionButton(
+            onClick = onFullscreenToggle,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            containerColor = MonoAccent,
+            contentColor = Color.White
+        ) {
+            Icon(
+                imageVector = if (isFullscreen) Icons.Default.Fullscreen else Icons.Default.FullscreenExit,
+                contentDescription = if (isFullscreen) "Exit Fullscreen" else "Enter Fullscreen",
+                modifier = Modifier.size(24.dp)
+            )
         }
 
         PullRefreshIndicator(
@@ -129,7 +158,6 @@ fun ScrollableContentWithAutoHideScrollbar(
     val scrollState = rememberScrollState()
     var containerHeightPx by remember { mutableIntStateOf(0) }
     var contentHeightPx by remember { mutableIntStateOf(1) }
-
     var isScrolling by remember { mutableStateOf(false) }
 
     LaunchedEffect(scrollState.value) {
@@ -150,13 +178,11 @@ fun ScrollableContentWithAutoHideScrollbar(
                 },
             content = content
         )
-
         LaunchedEffect(scrollState.maxValue) {
             if (containerHeightPx > 0) {
                 contentHeightPx = containerHeightPx + scrollState.maxValue
             }
         }
-
         if (contentHeightPx > containerHeightPx) {
             Canvas(
                 modifier = Modifier
@@ -173,7 +199,6 @@ fun ScrollableContentWithAutoHideScrollbar(
                 val rawThumbHeight = size.height * proportionVisible
                 val thumbHeight = rawThumbHeight.coerceIn(minThumbHeightPx, maxThumbHeightPx)
                 val thumbOffset = (size.height - thumbHeight) * scrollFraction
-
                 drawRoundRect(
                     color = Color.DarkGray.copy(alpha = 0.7f),
                     topLeft = Offset(x = 0f, y = thumbOffset),
@@ -186,66 +211,97 @@ fun ScrollableContentWithAutoHideScrollbar(
 }
 
 @Composable
-fun ReflectionCard(reflection: com.example.dailyreflection.model.ReflectionData) {
+fun ReflectionCard(
+    reflection: com.example.dailyreflection.model.ReflectionData,
+    isFavorite: Boolean,
+    onToggleFavorite: () -> Unit
+) {
     Surface(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         color = MonoCardBg,
         shape = MaterialTheme.shapes.medium,
         border = BorderStroke(2.dp, MonoAccent)
     ) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+        Box {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(
+                    formatDateFromBackendWithYear(reflection.date),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MonoAccent,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
                 Text(
                     reflection.title,
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Bold,
+                    color = MonoText,
+                    modifier = Modifier.padding(end = 40.dp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    "Bacaan: ${reflection.passage}",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
                     color = MonoText
                 )
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(20.dp))
                 Text(
-                    formatDateFromBackend(reflection.date),
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = MonoAccent
+                    reflection.content,
+                    fontSize = 20.sp,
+                    color = MonoText,
+                    lineHeight = 28.sp
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    "Sumber: ${reflection.source}",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Light,
+                    color = MonoAccent,
+                    modifier = Modifier.align(Alignment.End)
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                "Bacaan: ${reflection.passage}",
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = MonoText
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                reflection.content,
-                fontSize = 20.sp,
-                color = MonoText,
-                lineHeight = 28.sp
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                "Sumber: ${reflection.source}",
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Light,
-                color = MonoAccent,
-                modifier = Modifier.align(Alignment.End)
-            )
+            IconButton(
+                onClick = onToggleFavorite,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(12.dp)
+            ) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                    contentDescription = if (isFavorite) "Hapus dari Favorit" else "Tambah ke Favorit",
+                    tint = if (isFavorite) Color(0xFFF44336) else MonoAccent,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
         }
     }
 }
 
-fun formatDateFromBackend(dateStr: String): String {
+fun formatDateFromBackendWithYear(dateStr: String): String {
     return try {
         val inputFormatter = DateTimeFormatter.ISO_DATE_TIME
         val date = LocalDate.parse(dateStr, inputFormatter)
-        val outputFormatter = DateTimeFormatter.ofPattern("dd MMMM", Locale.getDefault())
+        val outputFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.getDefault())
         date.format(outputFormatter)
     } catch (_: Exception) {
-        dateStr.take(10)
+        try {
+            val datePart = dateStr.take(10)
+            val parts = datePart.split("-")
+            if (parts.size == 3) {
+                val year = parts[0]
+                val month = parts[1].toInt()
+                val day = parts[2].toInt()
+                val monthNames = arrayOf(
+                    "", "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                )
+                "$day ${monthNames[month]} $year"
+            } else {
+                dateStr.take(10)
+            }
+        } catch (_: Exception) {
+            dateStr.take(10)
+        }
     }
 }
