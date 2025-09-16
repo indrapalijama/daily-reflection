@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dailyreflection"
+    namespace = "fulk.evilcorp.dailyreflection"
     compileSdk = 35
 
 
     defaultConfig {
-        applicationId = "com.example.dailyreflection"
+        applicationId = "fulk.evilcorp.dailyreflection"
         minSdk = 33
         targetSdk = 36
         versionCode = 1
@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.material.icons.extended)
+    implementation(libs.androidx.core.splashscreen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidxJUnit)

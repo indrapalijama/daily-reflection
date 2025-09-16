@@ -121,12 +121,15 @@ OkHttpClient configured with timeouts for network efficiency.
 
 ## To-Do
 
+- [x] Add splash screen
 - [x] Implement the **Favorites** feature functionality to allow users to save and view favorite reflections
-- [ ] Enhance **loading and error states** with animations or additional user-friendly illustrations
+- [x] Enhance **loading and error states** with animations or additional user-friendly illustrations
 - [x] Expand support for **offline caching** to allow reading reflections without internet access
-- [ ] Improve UI/UX with **animations, transitions, and polished designs** for all screens
+- [x] Improve UI/UX with **animations, transitions, and polished designs** for all screens
 - [ ] Implement **unit and UI tests** for critical components to ensure reliability
 - [ ] Add **settings screen** to allow customization such as theme switching (dark/light mode) and notification preferences
+- [ ] Add profile page for tracking
+- [ ] Add clickable passage for read the verse
 
 ***
 
@@ -139,7 +142,7 @@ This project would not have been possible without the valuable resources and too
 
 * The unDraw project for providing free, high-quality illustrations used to improve app user experience.
 
-We are grateful for these contributions that enabled the creation and polishing of this app.
+I am grateful for these contributions that enabled the creation and polishing of this app.
 
 ***
 

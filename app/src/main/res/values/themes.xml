@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.DailyReflection" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.SaatTeduh" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.SaatTeduh.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_saat_teduh_animated</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.SaatTeduh</item>
+    </style>
 </resources>
